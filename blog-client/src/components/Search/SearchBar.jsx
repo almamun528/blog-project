@@ -1,7 +1,6 @@
-
 const SearchBar = () => {
   return (
-    <section className="place-items-center">
+    <section className=" flex items-center justify-center ">
       <form className="w-full flex justify-between max-w-lg max-sm:scale-75 max-auto border border-gray-300 bg-white rounded overflow-hidden">
         <input
           className="w-full pl-4 outline-none"
