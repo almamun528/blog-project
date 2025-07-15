@@ -8,3 +8,7 @@
 ::-webkit-scrollbar {
   display: none;
 }
+/* primary background color */
+.bg-primary {
+  background-color: #5043e4;
+}

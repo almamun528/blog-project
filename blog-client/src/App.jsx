@@ -1,11 +1,15 @@
-import React from 'react'
-
+import { Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home/Home";
+import Blog from "./Pages/Blog/Blog";
 function App() {
   return (
-    <section className='bg-red-500 text-center py-3 text-white '>
-      App is running...
+    <section>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/blog" element={<Blog />} />
+      </Routes>
     </section>
-  )
+  );
 }
 
-export default App
+export default App;
