@@ -1,4 +1,5 @@
 import { assets } from "../../assets/assets";
+import SearchBar from "../Search/SearchBar";
 
 const Header = () => {
   return (
@@ -12,6 +13,13 @@ const Header = () => {
           Your own <span className="text-indigo-600">blogging</span> <br />
           platform.
         </h1>
+        <p className="my-6 sm:my-8 max-w-2xl m-auto max-sm:text-xs text-gray-500">
+          This is your space to think out loud, to share what matters, and to
+          write without filters. Whether it's one word or a thousand, your story
+          starts right here.
+        </p>
+        {/* search Bar Component */}
+        <SearchBar />
       </div>
       <img
         src={assets.gradientBackground}
