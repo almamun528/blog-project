@@ -5,7 +5,7 @@ const Nav = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="flex w-10/12  mx-auto justify-between items-center py-5 sm:max-20 xl:max-32 cursor-pointer">
+    <nav className="flex lg:w-10/12 md:w-11/12 w-full  mx-auto justify-between items-center py-5 sm:max-20 xl:max-32 cursor-pointer">
       <img
         onClick={() => {
           navigate("/");
