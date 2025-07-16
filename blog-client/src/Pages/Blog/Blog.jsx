@@ -3,11 +3,15 @@ import { useParams } from "react-router-dom";
 import { assets, blog_data, comments_data } from "../../assets/assets";
 import Nav from "../../components/NavBar/Nav";
 import Moment from "moment";
+import Footer from "../../components/Footer/Footer";
+import Spin from "../../components/Loading/Spin";
+
 const Blog = () => {
   const { id } = useParams();
   const [data, setData] = useState([]);
   const [comments, setComments] = useState([]);
-
+  const [name, SetName] = useState("");
+  const [content, setContent] = useState("");
   const fetchBlogData = async () => {
     const data = blog_data?.find((item) => item._id === id);
     setData(data);
@@ -23,6 +27,13 @@ const Blog = () => {
   useEffect(() => {
     fetchComments();
   }, []);
+
+  // event for comment review submit
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    console.log("hello");
+  };
+
   return data ? (
     <section className="">
       <div className="relative">
@@ -57,7 +68,7 @@ const Blog = () => {
           ></div>
           {/* Comment section  */}
           <div className="mt-14 mb-10 max-w-3xl mx-auto">
-            <p className="my-4">Comments ({comments?.length})</p>
+            <p className="my-4 font-semibold">Comments ({comments?.length})</p>
 
             {/* show comments  */}
             <div className="flex flex-col gap-4">
@@ -82,11 +93,68 @@ const Blog = () => {
               ))}
             </div>
           </div>
+
+          {/* Comment Form Area */}
+          <div className="flex justify-center">
+            <div className="w-full max-w-xl px-4">
+              <p className="font-semibold mb-4">Add Your Honest Comment.</p>
+              <form
+                onSubmit={() => handleReviewSubmit}
+                className="flex flex-col items-start gap-4 max-w-lg "
+              >
+                <input
+                  onChange={(e) => SetName(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded outline-none"
+                  type="text"
+                  placeholder="Name"
+                  required
+                />
+                <textarea
+                  onChange={(e) => setContent(e.target.value)}
+                  className="w-full p-2 border border-gray-300 rounded outline-none h-48"
+                  required
+                  name="Comment"
+                  id=""
+                ></textarea>
+                <button
+                  className="bg-primary text-white rounded p-2 px-8 hover:scale-102 transition-all cursor-pointer"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </form>
+            </div>
+          </div>
+          {/* social media icons */}
+          <div className="my-24 w-1/2 mx-auto ">
+            <p className="text-indigo-500 font-semibold my-4">
+              Share this article in social media
+            </p>
+            {/* Social Media Icons  */}
+            <div className="flex">
+              <img
+                className="hover:cursor-pointer"
+                src={assets.facebook_icon}
+                alt="facebook-icon"
+              />
+              <img
+                className="hover:cursor-pointer"
+                src={assets.twitter_icon}
+                alt="x-icon"
+              />
+              <img
+                className="hover:cursor-pointer"
+                src={assets.googleplus_icon}
+                alt="google-icon"
+              />
+            </div>
+          </div>
         </div>
+        <Footer />
       </div>
     </section>
   ) : (
-    <h2>Loading....</h2>
+    <Spin />
   );
 };
 

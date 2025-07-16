@@ -7,7 +7,10 @@ function BlogCard({ blog }) {
 
   return (
     <div
-      onClick={() => navigate(`/blog/${_id}`)}
+      onClick={() => {
+        navigate(`/blog/${_id}`);
+        window.scrollTo(0, 0);
+      }}
       className="cursor-pointer max-w-sm bg-white border border-gray-200 rounded-2xl shadow-md hover:shadow-xl hover:scale-[1.02] transition-all duration-300"
     >
       <div className="overflow-hidden rounded-t-2xl">
