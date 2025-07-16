@@ -1,4 +1,6 @@
 import BlogList from "../../components/Blog-List/BlogList";
+import NewsLetter from "../../components/Call-To-Action/NewsLetter";
+import Footer from "../../components/Footer/Footer";
 import HeaderSection from "../../components/Hero/HeaderSection";
 import Nav from "../../components/NavBar/Nav";
 
@@ -8,6 +10,8 @@ const Home = () => {
       <Nav />
       <HeaderSection />
       <BlogList />
+      <NewsLetter />
+      <Footer/>
     </section>
   );
 };
