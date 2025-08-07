@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { blog_data, blogCategories } from "../../assets/assets";
-import { motion } from "motion/react";
 import BlogCard from "../Blog-Card/BlogCard";
 
 function BlogList() {
