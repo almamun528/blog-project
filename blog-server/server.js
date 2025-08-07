@@ -11,7 +11,9 @@ await connectDB();
 // middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/", routes);
+
 
 app.get("/", (req, res) => res.send("Server is running"));
 
@@ -20,5 +22,3 @@ app.listen(PORT, () => {
 });
 
 export default app;
-// I have to make Module pattern code
-// 3h 53m 52s
