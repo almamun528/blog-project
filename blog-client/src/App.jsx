@@ -7,7 +7,7 @@ import AddBlogs from "./Pages/Admin-Pages/AddBlogs";
 import ListBlog from "./Pages/Admin-Pages/ListBlog";
 import Comment from "./Pages/Admin-Pages/Comment";
 import Login from "./components/Admin/Login";
-
+import "quill/dist/quill.snow.css"; //import it for make controlled message box area
 function App() {
   const isLogin = true;
   return (
