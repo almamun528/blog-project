@@ -1,6 +1,7 @@
 import fs from "fs";
 import imagekit from "../../config/imageKit.js";
 import Blog from "./blog.model.js";
+import Comment from "../comment/comment.model.js";
 
 // create a single blog
 export const addBlog = async (req, res) => {
@@ -51,4 +52,57 @@ export const addBlog = async (req, res) => {
   }
 };
 
+// read all blogs
+export const getAllBlogs = async (req, res) => {
+  try {
+    const blogs = await Blog.find({ isPublished: true });
+    res.json({ success: true, blogs });
+  } catch (error) {
+    res.json({ success: false, message: error?.message });
+  }
+};
 
+// read a single blog
+
+export const getBlogById = async (req, res) => {
+  try {
+    const { blogId } = req.params; //get the blog from URL
+    const blog = await Blog.findById(blogId);
+    if (!blog) {
+      return res.json({ success: false, message: "Blog is not found " });
+    }
+    // send the blog with response
+    res.json({ success: true, blog });
+  } catch (error) {
+    res.json({ success: false, message: error?.message });
+  }
+};
+
+// delete a blog by id
+
+export const deleteBlogById = async (req, res) => {
+  try {
+    const { id } = req.body;
+    await Blog.findByIdAndDelete(id);
+
+    // !delete  comments which are attached with this blog
+    await Comment.deleteMany({ blog: id });
+
+    res.json({ success: true, message: "Blog is deleted" });
+  } catch (error) {
+    req.json({ success: false, message: error?.message });
+  }
+};
+
+// update blog status either it is isPublished or not
+export const togglePublished = async (req, res) => {
+  try {
+    const { id } = req.body;
+    const blog = await Blog.findById(id);
+    blog.isPublished = !blog.isPublished;
+    await blog.save();
+    res.json({ success: true, message: "Blog status updated" });
+  } catch (error) {
+    res.json({ success: false, message: error?.message });
+  }
+};
