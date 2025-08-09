@@ -1,56 +1,54 @@
 import fs from "fs";
 import imagekit from "../../config/imageKit.js";
-import Blog from './blog.model.js'
+import Blog from "./blog.model.js";
 
-
-// post a single blog || Create a single blog
+// create a single blog
 export const addBlog = async (req, res) => {
   try {
     const { title, subTitle, description, category, isPublished } = JSON.parse(
       req.body.blog
     );
     const imageFile = req.file;
-
-    // Fix: Corrected logic error in field validation
-    if (!title || !subTitle || !description || !category || !imageFile) {
-      return res.json({
-        success: false,
-        message: "Missing required fields",
-      });
+    // check all file is present or not
+    if (!title || !description || !category || !imageFile) {
+      return res.json({ success: false, message: "Missing File Is Required" });
     }
 
-    //  Read image from file system
     const fileBuffer = fs.readFileSync(imageFile.path);
-
-    // Upload image to ImageKit
+    // upload image to imageKit
     const response = await imagekit.upload({
       file: fileBuffer,
       fileName: imageFile.originalname,
-      folder: "/blog",
+      folder: "/blogs",
     });
-
-    //Optimize image URL
-    const optimizedImageURL = imagekit.url({
+    // optimize image from imageKit
+    const optimizedImageUrl = imagekit.url({
       path: response.filePath,
       transformation: [
-        { quality: "auto" },
-        { format: "webp" },
-        { width: "1280" },
+        { quality: "auto" }, // Auto Compress image
+        { formate: "webp" }, // convert to modern formate
+        { width: 1280 }, // width resizing
       ],
     });
+    const image = optimizedImageUrl;
+    // save data to database
 
-    // !Save blog to database
     await Blog.create({
       title,
       subTitle,
       description,
       category,
-      image: optimizedImageURL,
+      image,
       isPublished,
     });
-
-    res.json({ success: true, message: "Blog added successfully" });
+    res.json({ success: true, message: "Blog Posted Into Database" });
   } catch (error) {
-    res.json({ success: false, message: error?.message });
+    console.log(error);
+    res.json({
+      success: false,
+      message: error?.message,
+    });
   }
 };
+
+

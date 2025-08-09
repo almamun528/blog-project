@@ -5,6 +5,5 @@ import auth from "../../middleware/auth.js";
 
 const blogRoute = Router();
 
-blogRoute.post("/add-blog", upload.single("image"), auth, addBlog);
-
+blogRoute.post("/add/blog", upload.single("image"), auth, addBlog);
 export default blogRoute;

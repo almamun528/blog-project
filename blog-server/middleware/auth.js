@@ -5,9 +5,9 @@ const auth = (req, res, next) => {
   try {
     jwt.verify(token, process.env.jwt_secret_key);
     next();
-    console.log(token)
   } catch (error) {
-    res.json({ success: false, message: error?.message });
+    res.json({ success: false, message: "Invalid Token" });
   }
 };
+
 export default auth;

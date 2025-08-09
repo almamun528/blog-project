@@ -4,8 +4,7 @@ import cors from "cors";
 import connectDB from "./config/db.js";
 import routes from "./router/router.js";
 
-
-const PORT = 3001;
+const PORT = 3000;
 const app = express();
 await connectDB();
 // middleware
@@ -14,7 +13,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", routes);
 
-
 app.get("/", (req, res) => res.send("Server is running"));
 
 app.listen(PORT, () => {
@@ -22,3 +20,4 @@ app.listen(PORT, () => {
 });
 
 export default app;
+
