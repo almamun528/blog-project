@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { assets, blogCategories } from "../../assets/assets";
 import Quill from "quill";
+import axiosInstance from "../../AxiosApis/AxiosIntance";
 
 const AddBlogs = () => {
   const editorRef = useRef(null);
@@ -17,10 +18,50 @@ const AddBlogs = () => {
     // Add AI content logic here
   };
 
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    // Handle blog form submission
-  };
+const handleFormSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!image) {
+    alert("Please select an image");
+    return;
+  }
+
+  try {
+    // Prepare FormData to match backend expectation
+    const formData = new FormData();
+
+    // Your backend expects blog data JSON string in 'blog' field
+    const blogData = {
+      title,
+      subTitle,
+      description: quillRef.current?.getEditor().getText() || "", // Or get HTML if you want
+      category,
+      isPublished,
+    };
+    formData.append("blog", JSON.stringify(blogData));
+
+    // Append image file
+    formData.append("image", image);
+
+    const response = await axiosInstance.post("/add-blog", formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+
+    console.log(response.data);
+    if (response.data.success) {
+      alert("Blog is posted successfully");
+      // Optionally reset form here
+    } else {
+      alert("Failed to post blog: " + response.data.message);
+    }
+  } catch (error) {
+    console.error("Error posting blog:", error);
+    alert("An error occurred while posting the blog");
+  }
+};
+
 
   useEffect(() => {
     if (!quillRef.current && editorRef.current) {
