@@ -1,10 +1,14 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { assets } from "../../assets/assets";
 import Sidebar from "../../components/Admin/Sidebar";
+import { useAppContext } from "../../Context/AppContext";
 
 const Layout = () => {
-  const navigate = useNavigate();
+  const { axios, setToken, navigate } = useAppContext();
   const logOut = () => {
+    localStorage.removeItem("token");
+    axios.defaults.headers.common["Authorization"] = null;
+    setToken(null);
     navigate("/");
   };
   return (
@@ -22,7 +26,7 @@ const Layout = () => {
           alt="logo"
         />
         <button
-          onClick={() => logOut}
+          onClick={() => logOut()}
           className="text-sm px-8 py-2 bg-primary text-white rounded-full cursor-pointer"
         >
           Log Out

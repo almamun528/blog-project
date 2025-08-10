@@ -3,12 +3,12 @@ import { assets, blogCategories } from "../../assets/assets";
 import Quill from "quill";
 import { useAppContext } from "../../Context/AppContext";
 import toast from "react-hot-toast";
-
+import { parse } from "marked";
 const AddBlogs = () => {
   const editorRef = useRef(null);
   const quillRef = useRef(null);
-  const { axios } = useAppContext();
-
+  const { axios, token } = useAppContext();
+  const [loading, setLoading] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
 
   const [image, setImage] = useState(null);
@@ -18,15 +18,27 @@ const AddBlogs = () => {
   const [isPublished, setIsPublished] = useState(false);
 
   const generateWithAi = async () => {
-    console.log("hello ai");
-    // Add AI content logic here
+    if (!title) return toast.error("Please Enter Title");
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/api/generate", { prompt: title });
+      if (data.success) {
+        quillRef.current.root.innerHTML = parse(data.content);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     if (!image) {
-      alert("Please select an image");
+      toast.error("Please select an image");
       return;
     }
 
@@ -48,6 +60,7 @@ const AddBlogs = () => {
       const { data } = await axios.post("/api/add/blog", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -126,6 +139,7 @@ const AddBlogs = () => {
         <div className="max-w-lg h-[300px] pb-16 sm:pb-10 pt-2 relative">
           <div ref={editorRef}></div>
           <button
+            disabled={loading}
             className="absolute bottom-1 right-2 ml-2 text-xs text-white bg-black/70 px-4 py-1.5 rounded hover:underline cursor-pointer"
             type="button"
             onClick={generateWithAi}

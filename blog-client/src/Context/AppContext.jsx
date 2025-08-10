@@ -1,3 +1,4 @@
+// AppContext.jsx
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 import toast from "react-hot-toast";
@@ -12,41 +13,53 @@ export const AppProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [input, setInput] = useState("");
+
   // fetch blogs
   const fetchBlogs = async () => {
     try {
       const { data } = await axios.get("/api/read/blog");
-      data?.success ? setBlogs(data?.blogs) : toast.error(data?.message);
+      if (data?.success) {
+        setBlogs(data.blogs);
+      } else {
+        toast.error(data?.message);
+      }
     } catch (error) {
       toast.error(error?.message);
     }
   };
 
-  // render all blogs
+  //  load token and set axios header + fetch blogs
   useEffect(() => {
-    fetchBlogs();
-    const token = localStorage.getItem("token");
-    if (token) {
-      setToken(token);
-      axios.defaults.headers.common["Authorization"] = `${token}`;
+    const savedToken = localStorage.getItem("token");
+    if (savedToken) {
+      setToken(savedToken);
+      axios.defaults.headers.common["Authorization"] = `Bearer ${savedToken}`; 
     }
+    fetchBlogs();
   }, []);
-  // value pass into context
+
+  // optional logout function example
+  const logout = () => {
+    localStorage.removeItem("token");
+    setToken(null);
+    delete axios.defaults.headers.common["Authorization"];
+    navigate("/login");
+  };
+
   const value = {
     token,
+    setToken,
     navigate,
     axios,
-    setToken,
     blogs,
     setBlogs,
     input,
     setInput,
+    logout,
+    fetchBlogs,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
 
-// ----> return hook to call the context quickly
-export const useAppContext = () => {
-  return useContext(AppContext);
-};
+export const useAppContext = () => useContext(AppContext);
