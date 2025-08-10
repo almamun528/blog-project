@@ -27,4 +27,4 @@ export default blogRoute;
 
 // * Blog for Ai prompt
 
-blogRoute.post("/generate", auth, generateContent);
+blogRoute.post("/generate", generateContent);
