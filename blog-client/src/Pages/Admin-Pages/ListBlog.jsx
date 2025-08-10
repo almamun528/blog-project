@@ -9,6 +9,7 @@ const ListBlog = () => {
   const { axios } = useAppContext();
   const fetchBlogs = async () => {
     try {
+      // fetch blog data from backend.
       const { data } = await axios.get("/api/blogs");
       if (data?.success) {
         setBlogs(data?.blogs);
