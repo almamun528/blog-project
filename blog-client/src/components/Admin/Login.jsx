@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  // login form submit
+  //!   login form submit
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -24,7 +24,7 @@ const Login = () => {
         axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
         toast.success("Login successful!");
         //! Redirect to dashboard
-        navigate("/admin/dashboard");
+        navigate("/admin");
       } else {
         toast.error(data?.message || "Invalid credentials");
       }

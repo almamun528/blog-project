@@ -1,7 +1,12 @@
 import { assets } from "../../assets/assets";
+import { useAppContext } from "../../Context/AppContext";
 import SearchBar from "../Search/SearchBar";
 
 const Header = () => {
+  const { input, setInput } = useAppContext();
+  // const onClear = () => {
+  //   setInput("");
+  // };
   return (
     <section className="mx-8 sm:max-16 xl:max-24 relative">
       <div className="text-center mt-20 mb-8">
@@ -19,7 +24,8 @@ const Header = () => {
           starts right here.
         </p>
         {/* search Bar Component */}
-        <SearchBar />
+        <SearchBar setInput={setInput} input={input} />
+      
       </div>
       <img
         src={assets.gradientBackground}
