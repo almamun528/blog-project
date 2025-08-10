@@ -21,10 +21,15 @@ export const AppProvider = ({ children }) => {
       toast.error(error?.message);
     }
   };
-  
+
   // render all blogs
   useEffect(() => {
     fetchBlogs();
+    const token = localStorage.getItem("token");
+    if (token) {
+      setToken(token);
+      axios.defaults.headers.common["Authorization"] = `${token}`;
+    }
   }, []);
   // value pass into context
   const value = {

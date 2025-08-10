@@ -1,14 +1,38 @@
 import React, { useState } from "react";
+import { useAppContext } from "../../Context/AppContext";
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   // login form submit
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const { axios, setToken } = useAppContext();
+
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    
+    try {
+      const { data } = await axios.post("/api/admin-login", {
+        email,
+        password,
+      });
+      if (data?.success) {
+        setToken(data.token);
+        localStorage.setItem("token", data.token);
+        axios.defaults.headers.common["Authorization"] = `Bearer ${data.token}`;
+        toast.success("Login successful!");
+        //! Redirect to dashboard
+        navigate("/admin/dashboard");
+      } else {
+        toast.error(data?.message || "Invalid credentials");
+      }
+    } catch (error) {
+      toast.error(error?.message || "Something went wrong");
+    }
   };
+
   return (
     <section className="flex items-center justify-center h-screen">
       <div className="w-full max-w-sm p-6 max-md:6 border border-indigo-600 shadow-2xl shadow-indigo-400 rounded-lg">

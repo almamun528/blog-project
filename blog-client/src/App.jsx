@@ -9,8 +9,11 @@ import Comment from "./Pages/Admin-Pages/Comment";
 import Login from "./components/Admin/Login";
 import "quill/dist/quill.snow.css"; //import it for make controlled message box area
 import { Toaster } from "react-hot-toast";
+import { useAppContext } from "./Context/AppContext";
+
 function App() {
-  const isLogin = true;
+  const { token } = useAppContext();
+
   return (
     <section>
       <Toaster />
@@ -20,7 +23,7 @@ function App() {
         <Route path="/blog/:id" element={<Blog />} />
 
         {/* Admin Routes */}
-        <Route path="/admin" element={isLogin ? <Layout /> : <Login />}>
+        <Route path="/admin" element={token ? <Layout /> : <Login />}>
           <Route index element={<Dashboard />} />
           <Route path="addBlog" element={<AddBlogs />} />
           <Route path="listBlog" element={<ListBlog />} />

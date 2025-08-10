@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { assets, blogCategories } from "../../assets/assets";
 import Quill from "quill";
-import axiosInstance from "../../AxiosApis/AxiosIntance";
+
 
 const AddBlogs = () => {
   const editorRef = useRef(null);
