@@ -64,6 +64,7 @@ const Blog = () => {
         blog: id,
         name,
         content,
+        
       });
 
       if (data.success) {
