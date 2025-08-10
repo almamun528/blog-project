@@ -8,7 +8,7 @@ const Header = () => {
   return (
     <section className="mx-8 sm:max-16 xl:max-24 relative">
       <div className="text-center mt-20 mb-8">
-        <div className="inline-flex items-center justify-center gap-4 px-6 py-1.5 mb-4 border border-indigo-500/40 bg-indigo-700/10 rounded-full text-sm">
+        <div className="inline-flex items-center justify-center gap-4 px-6 py-1.5 mb-4 border border-[#f3c623] bg-secondary/30 rounded-full text-sm">
           <p>New: AI-powered insights now live!</p>
           <img src={assets.star_icon} className="w-2.5" alt="star icon" />
         </div>
