@@ -10,11 +10,18 @@
 }
 /* primary background color */
 .bg-primary {
-  background-color: #5043e4;
+  background-color: #fa812f;
 }
-
+.primary {
+  color: #ffb22c;
+}
 /*  rich text for data description*/
-
+.secondary {
+  color: #f3c623;
+}
+.bg-secondary {
+  background-color: #f3c623;
+}
 .rich-text {
   font-size: 15px;
 }

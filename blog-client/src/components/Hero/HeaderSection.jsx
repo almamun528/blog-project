@@ -13,7 +13,7 @@ const Header = () => {
           <img src={assets.star_icon} className="w-2.5" alt="star icon" />
         </div>
         <h1 className="text-3xl sm:text-6xl font-semibold sm:leading-16 text-gray-700">
-          Share <span className="text-indigo-600">Your Voice</span> <br />
+          Share <span className="secondary">Your Voice</span> <br />
           Inspire, Inform, Connect.
         </h1>
         <p className="my-6 sm:my-8 max-w-2xl m-auto max-sm:text-xs text-gray-500">

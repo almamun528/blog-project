@@ -94,7 +94,7 @@ const Blog = () => {
         />
         <Nav />
         <div className="text-center mt-20 text-gray-600">
-          <p className="py-4 text-indigo-600 font-medium text-md">
+          <p className="py-4 secondary font-medium text-md">
             Published on {Moment(data.createdAt).format("MMM Do YYYY")}
           </p>
           <h1 className="text-2xl sm:text-5xl font-semibold max-w-2xl mx-auto text-gray-800">
@@ -176,7 +176,7 @@ const Blog = () => {
 
           {/* Social Media Icons */}
           <div className="my-24 w-1/2 mx-auto">
-            <p className="text-indigo-500 font-semibold my-4">
+            <p className="secondary font-semibold my-4">
               Share this article in social media
             </p>
             <div className="flex">

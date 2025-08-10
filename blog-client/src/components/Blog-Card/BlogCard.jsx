@@ -22,7 +22,7 @@ function BlogCard({ blog }) {
       </div>
 
       <div className="p-4">
-        <span className="inline-block bg-indigo-100 text-indigo-700 px-3 py-1 text-xs font-semibold rounded-full mb-3">
+        <span className="inline-block bg-secondary text-black px-3 py-1 text-xs font-semibold rounded-full mb-3">
           {category}
         </span>
 

@@ -35,7 +35,7 @@ const NewsLetter = () => {
         />
         <button
           type="submit"
-          className="md:px-12 px-8 h-full text-white bg-indigo-600/80 rounded-md rounded-l-none transition-all cursor-pointer"
+          className="md:px-12 px-8 h-full text-white bg-primary  rounded-md rounded-l-none transition-all cursor-pointer"
         >
           Subscribe
         </button>

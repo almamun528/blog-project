@@ -10,6 +10,7 @@ import Login from "./components/Admin/Login";
 import "quill/dist/quill.snow.css"; //import it for make controlled message box area
 import { Toaster } from "react-hot-toast";
 import { useAppContext } from "./Context/AppContext";
+import ErrorPage from "./Pages/ErrorPage";
 
 function App() {
   const { token } = useAppContext();
@@ -21,7 +22,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />
         <Route path="/blog/:id" element={<Blog />} />
-
+        <Route path="*" element={<ErrorPage />} />
         {/* Admin Routes */}
         <Route path="/admin" element={token ? <Layout /> : <Login />}>
           <Route index element={<Dashboard />} />

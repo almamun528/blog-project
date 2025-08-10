@@ -82,7 +82,7 @@ const Footer = () => {
             <h3 className="font-semibold text-base text-gray-900 mb-5">
               Follow Us
             </h3>
-            <ul className="flex flex-col gap-2 text-blue-600 font-medium">
+            <ul className="flex flex-col gap-2 secondary font-medium">
               {social_links.map(({ name, url }) => (
                 <li key={name}>
                   <a

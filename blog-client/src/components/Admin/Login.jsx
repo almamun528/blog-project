@@ -35,12 +35,12 @@ const Login = () => {
 
   return (
     <section className="flex items-center justify-center h-screen">
-      <div className="w-full max-w-sm p-6 max-md:6 border border-indigo-600 shadow-2xl shadow-indigo-400 rounded-lg">
+      <div className="w-full max-w-sm p-6 max-md:6 border border-[#F3C623] shadow-2xl shadow-[#FFB22C] rounded-lg">
         <div className="flex flex-col items-center justify-center ">
           {/* title and description  */}
           <div className="w-full py-6 text-center">
             <h1 className="text-3xl font-bold">
-              <span className="text-indigo-600">Admin</span> Login{" "}
+              <span className="text- secondary">Admin</span> Login{" "}
             </h1>
             <p className="text-capitalize my-1">
               Enter Your credential to access the admin panel{" "}
@@ -77,7 +77,7 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className="w-full py-3 font-medium bg-indigo-600 text-white rounded cursor-pointer hover:bg-indigo-900 transition-all"
+              className="w-full py-3 font-medium bg-primary text-white rounded cursor-pointer hover:bg-indigo-900 transition-all"
             >
               Login
             </button>
