@@ -31,8 +31,13 @@ import dashboard_icon_1 from "./dashboard_icon_1.svg";
 import dashboard_icon_2 from "./dashboard_icon_2.svg";
 import dashboard_icon_3 from "./dashboard_icon_3.svg";
 import dashboard_icon_4 from "./dashboard_icon_4.svg";
-
+import sliderImg1 from "./sliderImg1.png";
+import sliderImg2 from "./sliderImg2.png";
+import sliderImg3 from "./sliderImg3.png";
 export const assets = {
+  sliderImg1,
+  sliderImg2,
+  sliderImg3,
   facebook_icon,
   googleplus_icon,
   twitter_icon,
@@ -259,26 +264,7 @@ export const dashboard_data = {
   recentBlogs: blog_data.slice(0, 5),
 };
 
-export const footer_data = [
-  {
-    title: "Quick Links",
-    links: ["Home", "Best Sellers", "Offers & Deals", "Contact Us", "FAQs"],
-  },
-  {
-    title: "Need Help?",
-    links: [
-      "Delivery Information",
-      "Return & Refund Policy",
-      "Payment Methods",
-      "Track your Order",
-      "Contact Us",
-    ],
-  },
-  {
-    title: "Follow Us",
-    links: ["Instagram", "Twitter", "Facebook", "YouTube"],
-  },
-];
+
 
 //Fake Apis of Company
 export const services = [
@@ -345,5 +331,5 @@ export const services = [
   },
 ];
 // const allSErvice=[
-    
+
 // ]

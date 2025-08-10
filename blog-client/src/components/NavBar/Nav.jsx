@@ -6,15 +6,15 @@ const Nav = () => {
   const { navigate, token } = useAppContext();
   return (
     <nav className="flex lg:w-10/12 md:w-11/12 w-full  mx-auto justify-between items-center py-5 sm:max-20 xl:max-32 cursor-pointer">
-      <img
+      <button
         onClick={() => {
           navigate("/");
           window.scrollTo(0, 0);
         }}
-        src={assets.logo}
-        alt="logo"
-        className="w-32 sm:w-44 cursor-pointer"
-      />
+        className="w-32 sm:w-44  border-b-2 text-lg cursor-pointer"
+      >
+        Blog Dude
+      </button>
       {/* right side  */}
       <button
         onClick={() => navigate("/admin")}
