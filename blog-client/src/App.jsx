@@ -8,10 +8,12 @@ import ListBlog from "./Pages/Admin-Pages/ListBlog";
 import Comment from "./Pages/Admin-Pages/Comment";
 import Login from "./components/Admin/Login";
 import "quill/dist/quill.snow.css"; //import it for make controlled message box area
+import { Toaster } from "react-hot-toast";
 function App() {
   const isLogin = true;
   return (
     <section>
+      <Toaster />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/blog" element={<Blog />} />

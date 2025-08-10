@@ -1,5 +1,6 @@
 import axios from "axios";
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export const AppContext = createContext();
@@ -11,7 +12,20 @@ export const AppProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [blogs, setBlogs] = useState([]);
   const [input, setInput] = useState("");
-
+  // fetch blogs
+  const fetchBlogs = async () => {
+    try {
+      const { data } = await axios.get("/api/read/blog");
+      data?.success ? setBlogs(data?.blogs) : toast.error(data?.message);
+    } catch (error) {
+      toast.error(error?.message);
+    }
+  };
+  
+  // render all blogs
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
   // value pass into context
   const value = {
     token,
