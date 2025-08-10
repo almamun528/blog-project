@@ -1,11 +1,15 @@
 import React, { useEffect, useRef, useState } from "react";
 import { assets, blogCategories } from "../../assets/assets";
 import Quill from "quill";
-
+import { useAppContext } from "../../Context/AppContext";
+import toast from "react-hot-toast";
 
 const AddBlogs = () => {
   const editorRef = useRef(null);
   const quillRef = useRef(null);
+  const { axios } = useAppContext();
+
+  const [isAdding, setIsAdding] = useState(false);
 
   const [image, setImage] = useState(null);
   const [title, setTitle] = useState("");
@@ -18,50 +22,52 @@ const AddBlogs = () => {
     // Add AI content logic here
   };
 
-const handleFormSubmit = async (e) => {
-  e.preventDefault();
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
 
-  if (!image) {
-    alert("Please select an image");
-    return;
-  }
-
-  try {
-    // Prepare FormData to match backend expectation
-    const formData = new FormData();
-
-    // Your backend expects blog data JSON string in 'blog' field
-    const blogData = {
-      title,
-      subTitle,
-      description: quillRef.current?.getEditor().getText() || "", // Or get HTML if you want
-      category,
-      isPublished,
-    };
-    formData.append("blog", JSON.stringify(blogData));
-
-    // Append image file
-    formData.append("image", image);
-
-    const response = await axiosInstance.post("/add-blog", formData, {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
-
-    console.log(response.data);
-    if (response.data.success) {
-      alert("Blog is posted successfully");
-      // Optionally reset form here
-    } else {
-      alert("Failed to post blog: " + response.data.message);
+    if (!image) {
+      alert("Please select an image");
+      return;
     }
-  } catch (error) {
-    console.error("Error posting blog:", error);
-    alert("An error occurred while posting the blog");
-  }
-};
 
+    setIsAdding(true);
+
+    try {
+      const blog = {
+        title,
+        subTitle,
+        description: quillRef.current.root.innerHTML || "",
+        category,
+        isPublished,
+      };
+
+      const formData = new FormData();
+      formData.append("blog", JSON.stringify(blog));
+      formData.append("image", image);
+
+      const { data } = await axios.post("/api/add/blog", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (data?.success) {
+        toast.success(data.message);
+        setImage(null);
+        setTitle("");
+        setSubTitle("");
+        quillRef.current.root.innerHTML = "";
+        setCategory("startup");
+        setIsPublished(false);
+      } else {
+        toast.error(data.message || "Failed to add blog");
+      }
+    } catch (error) {
+      toast.error(error.message || "An error occurred");
+    } finally {
+      setIsAdding(false);
+    }
+  };
 
   useEffect(() => {
     if (!quillRef.current && editorRef.current) {
@@ -158,9 +164,10 @@ const handleFormSubmit = async (e) => {
         {/* Submit */}
         <button
           type="submit"
+          disabled={isAdding}
           className="mt-8 w-40 h-10 bg-primary text-white rounded cursor-pointer"
         >
-          Add Blog
+          {isAdding ? "Adding..." : "Add Blog"}
         </button>
       </div>
     </form>
