@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   addBlog,
   deleteBlogById,
+  generateContent,
   getAllBlogs,
   getBlogById,
   togglePublished,
@@ -21,5 +22,9 @@ blogRoute.post("/update/status", auth, togglePublished);
 //! apis endPoint for comments
 
 blogRoute.post("/add-comment", addComment);
-blogRoute.post("/comments", getBlogComments);
+blogRoute.get("/comments", getBlogComments);
 export default blogRoute;
+
+// * Blog for Ai prompt
+
+blogRoute.post("/generate", auth, generateContent);

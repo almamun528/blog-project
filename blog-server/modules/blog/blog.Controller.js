@@ -2,6 +2,7 @@ import fs from "fs";
 import imagekit from "../../config/imageKit.js";
 import Blog from "./blog.model.js";
 import Comment from "../comment/comment.model.js";
+import main from "../../config/gemini.js";
 
 // create a single blog
 export const addBlog = async (req, res) => {
@@ -82,15 +83,14 @@ export const getBlogById = async (req, res) => {
 
 export const deleteBlogById = async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
     await Blog.findByIdAndDelete(id);
 
-    // !delete  comments which are attached with this blog
     await Comment.deleteMany({ blog: id });
 
     res.json({ success: true, message: "Blog is deleted" });
   } catch (error) {
-    req.json({ success: false, message: error?.message });
+    res.json({ success: false, message: error?.message });
   }
 };
 
@@ -104,5 +104,18 @@ export const togglePublished = async (req, res) => {
     res.json({ success: true, message: "Blog status updated" });
   } catch (error) {
     res.json({ success: false, message: error?.message });
+  }
+};
+
+// google apis
+export const generateContent = async (req, res) => {
+  try {
+    const { prompt } = req.body;
+    const content = await main(
+      prompt + " Generate a blog content for this topic in simple text formate"
+    );
+    res.json({ success: true, content });
+  } catch (error) {
+    res.json({ success: false, message: error.message });
   }
 };

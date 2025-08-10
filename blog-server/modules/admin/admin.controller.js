@@ -76,12 +76,32 @@ export const deleteCommentById = async (req, res) => {
   }
 };
 
+
+
 export const approveCommentById = async (req, res) => {
   try {
     const { id } = req.body;
-    await Comment.findByIdAndUpdate(id, { isApproved: true });
-    res.json({ success: true, message: "Comment is approved" });
+
+    if (!id) {
+      return res.json({ success: false, message: "Comment ID is required" });
+    }
+
+    const updatedComment = await Comment.findByIdAndUpdate(
+      id,
+      { isApproved: true },
+      { new: true }
+    );
+
+    if (!updatedComment) {
+      return res.json({ success: false, message: "Comment not found" });
+    }
+
+    res.json({
+      success: true,
+      message: "Comment approved successfully",
+      comment: updatedComment,
+    });
   } catch (error) {
-    res.json({ success: false, message: error?.message });
+    res.json({ success: false, message: error.message });
   }
 };
